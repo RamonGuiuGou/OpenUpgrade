@@ -5,7 +5,8 @@ import logging
 from openupgradelib import openupgrade, openupgrade_merge_records
 
 _logger = logging.getLogger(__name__)
-
+import logging
+_logger = logging.getLogger(__name__)
 
 def harmonize_groups(env):
     """Unfold manual groups per company + proper company assignation"""
@@ -107,6 +108,11 @@ def harmonize_groups(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    _logger.info('ENTRATTTT************************************************end1')
+
     harmonize_groups(env)
+    _logger.info('ENTRATTTT************************************************end2')
+
     # Launch a recomputation of the account groups after previous changes
     env["account.account"].search([])._compute_account_group()
+    _logger.info('ENTRATTTT************************************************end3')
