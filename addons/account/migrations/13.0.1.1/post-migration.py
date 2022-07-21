@@ -431,6 +431,7 @@ def migration_invoice_moves(env):
 
 
 def compute_balance_for_draft_invoice_lines(env):
+    i = 0
     move_obj = env['account.move']
     groups = move_obj.read_group(
         [
@@ -449,6 +450,7 @@ def compute_balance_for_draft_invoice_lines(env):
         draft_invoices.line_ids.read()
         draft_invoices.line_ids._onchange_price_subtotal()
         for draft_invoice in draft_invoices:
+            i = i + 1
             try:
                 draft_invoice._recompute_dynamic_lines(recompute_all_taxes=True)
             except Exception as e:
@@ -1065,7 +1067,8 @@ def migrate(env, version):
     move_tags_from_taxes_to_repartition_lines(env)
     assign_tax_repartition_line_to_move_lines(env)
     assign_account_tags_to_move_lines(env)
-    compute_balance_for_draft_invoice_lines(env)
+    ##ULL
+    #compute_balance_for_draft_invoice_lines(env)
     _recompute_move_entries_totals(env)
     openupgrade.load_data(
         env.cr, "account", "migrations/13.0.1.1/noupdate_changes.xml")
