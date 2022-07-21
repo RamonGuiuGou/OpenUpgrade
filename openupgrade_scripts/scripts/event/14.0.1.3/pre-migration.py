@@ -71,6 +71,6 @@ def migrate(env, version):
     if openupgrade.table_exists(env.cr, "event_event_ticket"):
         openupgrade.rename_fields(env, _field_renames_event_sale)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames_event_sale)
-    rename_event_event_seats(env)
-    fast_fill_kanban_state(env)
-    avoid_default_in_event_event_stage_id(env)
+    #rename_event_event_seats(env)
+    #fast_fill_kanban_state(env)
+    #avoid_default_in_event_event_stage_id(env)

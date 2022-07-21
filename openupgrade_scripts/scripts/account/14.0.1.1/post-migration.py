@@ -7,7 +7,8 @@ from openupgradelib import openupgrade
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
-
+import logging
+_logger = logging.getLogger(__name__)
 
 def _create_hooks(env):
     def _check_fiscalyear_lock_date(self):
@@ -686,32 +687,85 @@ def fill_account_move_line_date(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+
+    _logger.info('ENTRATTTT************************************************post1')
+
     fill_account_journal_posted_before(env)
+    _logger.info('ENTRATTTT************************************************post2')
+
     fill_code_prefix_end_field(env)
+    _logger.info('ENTRATTTT************************************************post3')
+
     fill_default_account_id_field(env)
+    _logger.info('ENTRATTTT************************************************post4')
+
     fill_payment_id_and_statement_line_id_fields(env)
+    _logger.info('ENTRATTTT************************************************post5')
+
     fill_partial_reconcile_debit_and_credit_amounts(env)
+    _logger.info('ENTRATTTT************************************************post6')
+
     create_account_reconcile_model_lines(env)
+    _logger.info('ENTRATTTT************************************************post7')
+
     create_account_reconcile_model_template_lines(env)
+    _logger.info('ENTRATTTT************************************************post8')
+
     create_account_tax_report_lines(env)
+    _logger.info('ENTRATTTT************************************************post9')
+
     post_statements_with_unreconciled_lines(env)
+    _logger.info('ENTRATTTT************************************************post10')
+
     pass_bank_statement_line_note_to_journal_entry_narration(env)
+    _logger.info('ENTRATTTT************************************************post11')
+
     pass_payment_to_journal_entry_narration(env)
+    _logger.info('ENTRATTTT************************************************post12')
+
     fill_company_account_cash_basis_base_account_id(env)
+    _logger.info('ENTRATTTT************************************************post13')
+
     fill_account_move_line_amounts(env)
+    _logger.info('ENTRATTTT************************************************post14')
+
     fill_account_move_line_date(env)
+    _logger.info('ENTRATTTT************************************************post15')
+
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
+    _logger.info('ENTRATTTT************************************************post16')
+
     try_delete_noupdate_records(env)
+    _logger.info('ENTRATTTT************************************************post17')
+
     _create_hooks(env)
+    _logger.info('ENTRATTTT************************************************post18')
+
     fill_company_account_journal_suspense_account_id(env)
+    _logger.info('ENTRATTTT************************************************post19')
+
     fill_statement_lines_with_no_move(env)
+    _logger.info('ENTRATTTT************************************************post20')
+
     fill_account_journal_payment_credit_debit_account_id(env)
+    _logger.info('ENTRATTTT************************************************post21')
+
     create_new_counterpart_account_payment_transfer(env)
+    _logger.info('ENTRATTTT************************************************post22')
+
     map_account_payment_transfer(env)
+    _logger.info('ENTRATTTT************************************************post23')
+
     fill_account_payment_with_no_move(env)
+    _logger.info('ENTRATTTT************************************************post24')
+
     _delete_hooks(env)
+    _logger.info('ENTRATTTT************************************************post25')
+
     openupgrade.delete_record_translations(
         env.cr,
         "account",
         ["email_template_edi_invoice", "mail_template_data_payment_receipt"],
     )
+    _logger.info('ENTRATTTT************************************************post26')
+

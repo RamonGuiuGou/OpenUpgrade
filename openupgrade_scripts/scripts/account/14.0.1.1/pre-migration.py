@@ -1,6 +1,8 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import logging
+_logger = logging.getLogger(__name__)
 
 
 def rename_fields(env):
@@ -445,23 +447,40 @@ def delete_xmlid_existing_groups(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    _logger.info('ENTRATTTT************************************************1')
+
     openupgrade.set_xml_ids_noupdate_value(
         env, "account", ["account_analytic_line_rule_billing_user"], True
     )
+
     copy_fields(env)
+
     rename_fields(env)
+
     m2m_tables_account_journal_renamed(env)
+
     remove_constrains_reconcile_models(env)
+
     add_move_id_field_account_payment(env)
+
     add_move_id_field_account_bank_statement_line(env)
+
     add_edi_state_field_account_move(env)
+
     fill_empty_partner_type_account_payment(env)
+
     fill_account_move_line_currency_id(env)
+
     fill_account_payment_partner_id(env)
+
     delete_xmlid_existing_groups(env)
+
     openupgrade.remove_tables_fks(
         env.cr, ["account_bank_statement_import_ir_attachment_rel"]
     )
+    _logger.info('ENTRATTTT************************************************14')
+
     openupgrade.lift_constraints(
         env.cr, "account_bank_statement_line", "partner_account_id"
     )
+    _logger.info('ENTRATTTT************************************************15')
